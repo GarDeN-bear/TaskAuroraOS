@@ -46,13 +46,34 @@ ApplicationWindow {
     allowedOrientations: defaultAllowedOrientations
     visible: true
     property var model: ["ОПЦИЯ1", "ОПЦИЯ2", "ОПЦИЯ3", "ОПЦИЯ4"]
+    property int currentIndex: 1
+    Rectangle{
+        id: rectangleAnimation
+        width: 100; height: 20
+        border.width: 1
+        border.color: "DeepSkyBlue"
+        color: "DeepSkyBlue"
+        opacity: 1
+        x: row.x + width
+        y: row.y
+        z: 1
+        Text{
+            id: rectangleAnimationTxt
+            anchors.centerIn: parent
+            color: "white"
+            text: win.model[currentIndex]
+            font.pixelSize: 14
+        }
+    }
     Row {
+        id: row
         anchors.centerIn: parent
-        spacing: -2
+        spacing: -1
         Repeater {
+            id:repeater
             model: win.model.length
             Rectangle {
-                id: rect
+                id: rectangleRepeater
                 width: 100; height: 20
                 border.width: 1
                 border.color: "DeepSkyBlue"
@@ -64,51 +85,40 @@ ApplicationWindow {
                     font.pixelSize: 14
                 }
                 MouseArea{
-                    id: ma
+                    id: mouseAreaRectangle
                     anchors.fill: parent
-                    hoverEnabled: true
-                    onEntered: {
-                        colorAnimationStartTxt.start();
-                        colorAnimationStartRect.start();
+                    onClicked: {
+                        rectangleAnimationTxt.color = "DeepSkyBlue";
+                        playbanner.start()
+                        rectangleAnimation.x = row.x + rectangleRepeater.x - 0.25*row.spacing;
+                        win.currentIndex = index;
                     }
-                    onExited: {
-                        colorAnimationEndTxt.start();
-                        colorAnimationEndRect.start();
-                    }
-                    property int durationTime: 1000
-                    ColorAnimation {
-                        id: colorAnimationStartRect
-                        duration: ma.durationTime
-                        from: "white"
-                        to: "DeepSkyBlue"
-                        property: "color"
-                        target: rect
-                    }
-                    ColorAnimation {
-                        id: colorAnimationEndRect
-                        duration: ma.durationTime
-                        from: "DeepSkyBlue"
-                        to: "white"
-                        property: "color"
-                        target: rect
-                    }
-                    ColorAnimation {
-                        id: colorAnimationStartTxt
-                        duration: ma.durationTime
-                        from: "DeepSkyBlue"
-                        to: "white"
-                        property: "color"
-                        target: txt
-                    }
-                    ColorAnimation {
-                        id: colorAnimationEndTxt
-                        duration: ma.durationTime
-                        from: "white"
-                        to: "DeepSkyBlue"
-                        property: "color"
-                        target: txt
-                    }
+
                 }
+                property int durationTime: 1000
+                SequentialAnimation {
+                    id: playbanner
+                    running: false
+
+                    NumberAnimation {
+                        id: numberAnimationStartRectangle
+                        duration: mouseAreaRectangle.durationTime
+                        properties: "x"
+                        from: rectangleAnimation.x
+                        to: row.x + rectangleRepeater.x - 0.25*row.spacing
+                        target: rectangleAnimation
+                    }
+                    ColorAnimation {
+                        id: colorAnimationRectangleTxt2
+                        duration: mouseAreaRectangle.durationTime
+                        from: "DeepSkyBlue"
+                        to: "white"
+                        property: "color"
+                        target: rectangleAnimationTxt
+                    }
+
+                }
+
             }
         }
     }
