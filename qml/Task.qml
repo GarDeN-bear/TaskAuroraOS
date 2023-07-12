@@ -74,7 +74,7 @@ ApplicationWindow {
             model: win.model.length
             Rectangle {
                 id: rectangleRepeater
-                width: 100; height: 20
+                width: rectangleAnimation.width; height: rectangleAnimation.height
                 border.width: 1
                 border.color: "DeepSkyBlue"
                 Text{
