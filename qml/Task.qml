@@ -90,12 +90,10 @@ ApplicationWindow {
                     onClicked: {
                         rectangleAnimationTxt.color = "DeepSkyBlue";
                         playbanner.start()
-                        rectangleAnimation.x = row.x + rectangleRepeater.x - 0.25*row.spacing;
                         win.currentIndex = index;
                     }
-
+                    property int durationTime: 250
                 }
-                property int durationTime: 1000
                 SequentialAnimation {
                     id: playbanner
                     running: false
