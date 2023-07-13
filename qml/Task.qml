@@ -47,6 +47,7 @@ ApplicationWindow {
     visible: true
     property var model: ["ОПЦИЯ1", "ОПЦИЯ2", "ОПЦИЯ3", "ОПЦИЯ4"]
     property int currentIndex: 1
+    property int cornerRadius: 10
     Rectangle{
         id: rectangleAnimation
         width: 100; height: 20
@@ -65,18 +66,35 @@ ApplicationWindow {
             font.pixelSize: 14
         }
     }
-    Row {
+
+ Column{
+     anchors.centerIn: parent
+ Rectangle{
+     width: 100; height: 20
+     border.width: 1
+     border.color: "DeepSkyBlue"
+     color: "DeepSkyBlue"
+ }
+ LeftRounding{}
+ RightRounding {}
+}
+
+    /*Row {
         id: row
         anchors.centerIn: parent
         spacing: -1
         Repeater {
             id:repeater
             model: win.model.length
-            Rectangle {
+            Item {
+                anchors.centerIn: parent
+            }
+            /*Rectangle {
                 id: rectangleRepeater
                 width: rectangleAnimation.width; height: rectangleAnimation.height
                 border.width: 1
                 border.color: "DeepSkyBlue"
+                radius: (index === 0 || index === win.model.length - 1) ? win.cornerRadius: 0
                 Text{
                     id: txt
                     anchors.centerIn: parent
@@ -118,7 +136,6 @@ ApplicationWindow {
                 }
 
             }
-        }
-    }
-
+        }*/
 }
+//}
