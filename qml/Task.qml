@@ -48,13 +48,14 @@ ApplicationWindow {
     property var model: ["ОПЦИЯ1", "ОПЦИЯ2", "ОПЦИЯ3", "ОПЦИЯ4"]
     property int currentIndex: 1
     property int cornerRadius: 10
-    Rectangle{
+    RoundingRectangle{
         id: rectangleAnimation
         width: 100; height: 20
-        border.width: 1
-        border.color: "DeepSkyBlue"
+        borderWidth: 1
+        borderColor: "DeepSkyBlue"
         color: "DeepSkyBlue"
-        opacity: 1
+        radius: (currentIndex === 0 || currentIndex === win.model.length - 1) ? win.cornerRadius : 0
+        roundingSide: (currentIndex === 0) ? true :  false
         x: row.x + width
         y: row.y
         z: 1
@@ -66,20 +67,7 @@ ApplicationWindow {
             font.pixelSize: 14
         }
     }
-
- Column{
-     anchors.centerIn: parent
- Rectangle{
-     width: 100; height: 20
-     border.width: 1
-     border.color: "DeepSkyBlue"
-     color: "DeepSkyBlue"
- }
- LeftRounding{}
- RightRounding {}
-}
-
-    /*Row {
+    Row {
         id: row
         anchors.centerIn: parent
         spacing: -1
@@ -89,12 +77,14 @@ ApplicationWindow {
             Item {
                 anchors.centerIn: parent
             }
-            /*Rectangle {
+            RoundingRectangle {
                 id: rectangleRepeater
                 width: rectangleAnimation.width; height: rectangleAnimation.height
-                border.width: 1
-                border.color: "DeepSkyBlue"
-                radius: (index === 0 || index === win.model.length - 1) ? win.cornerRadius: 0
+                color: "white"
+                borderColor: "DeepSkyBlue"
+                borderWidth: 1
+                radius: (index === 0 || index === win.model.length - 1) ? win.cornerRadius : 0
+                roundingSide: (index === 0) ? true :  false
                 Text{
                     id: txt
                     anchors.centerIn: parent
@@ -136,6 +126,6 @@ ApplicationWindow {
                 }
 
             }
-        }*/
+        }
+    }
 }
-//}

@@ -48,8 +48,7 @@ SOURCES += \
 HEADERS += \
 
 DISTFILES += \
-    qml/LeftRounding.qml \
-    qml/RightRounding.qml \
+    qml/RoundingRectangle.qml \
     rpm/ru.auroraos.Task.spec \
     AUTHORS.md \
     CODE_OF_CONDUCT.md \
