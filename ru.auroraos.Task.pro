@@ -48,6 +48,7 @@ SOURCES += \
 HEADERS += \
 
 DISTFILES += \
+    qml/ChangeRectangle.qml \
     qml/RoundingRectangle.qml \
     rpm/ru.auroraos.Task.spec \
     AUTHORS.md \

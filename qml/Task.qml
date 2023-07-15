@@ -48,25 +48,6 @@ ApplicationWindow {
     property var model: ["ОПЦИЯ1", "ОПЦИЯ2", "ОПЦИЯ3", "ОПЦИЯ4"]
     property int currentIndex: 1
     property int cornerRadius: 10
-    RoundingRectangle{
-        id: rectangleAnimation
-        width: 100; height: 20
-        borderWidth: 1
-        borderColor: "DeepSkyBlue"
-        color: "DeepSkyBlue"
-        radius: (currentIndex === 0 || currentIndex === win.model.length - 1) ? win.cornerRadius : 0
-        roundingSide: (currentIndex === 0) ? true :  false
-        x: row.x + width
-        y: row.y
-        z: 1
-        Text{
-            id: rectangleAnimationTxt
-            anchors.centerIn: parent
-            color: "white"
-            text: win.model[currentIndex]
-            font.pixelSize: 14
-        }
-    }
     Row {
         id: row
         anchors.centerIn: parent
@@ -92,40 +73,39 @@ ApplicationWindow {
                     text: win.model[index]
                     font.pixelSize: 14
                 }
+                states:[
+                    State {
+                        name: "click"
+                        when: index === currentIndex
+                        PropertyChanges {
+                            target: rectangleRepeater; color: "DeepSkyBlue"
+                        }
+                        PropertyChanges {
+                            target: txt; color: "white"
+                        }
+                    }
+                ]
+                property int durationTime: 1000
+                transitions: [
+                    Transition {
+                        from: "*"
+                        to: "*"
+                        PropertyAnimation {target: rectangleRepeater; properties: "color"; duration: durationTime}
+                        PropertyAnimation {target: txt; properties: "color"; duration: durationTime}
+                    }
+                ]
                 MouseArea{
                     id: mouseAreaRectangle
                     anchors.fill: parent
                     onClicked: {
-                        rectangleAnimationTxt.color = "DeepSkyBlue";
-                        playbanner.start()
+                        rectangleRepeater.state = "click";
                         win.currentIndex = index;
                     }
-                    property int durationTime: 250
-                }
-                SequentialAnimation {
-                    id: playbanner
-                    running: false
-
-                    NumberAnimation {
-                        id: numberAnimationStartRectangle
-                        duration: mouseAreaRectangle.durationTime
-                        properties: "x"
-                        from: rectangleAnimation.x
-                        to: row.x + rectangleRepeater.x - 0.25*row.spacing
-                        target: rectangleAnimation
-                    }
-                    ColorAnimation {
-                        id: colorAnimationRectangleTxt2
-                        duration: mouseAreaRectangle.durationTime
-                        from: "DeepSkyBlue"
-                        to: "white"
-                        property: "color"
-                        target: rectangleAnimationTxt
-                    }
-
                 }
 
             }
         }
     }
 }
+
+
